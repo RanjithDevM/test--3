@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="AI Desk.png" type="image/png">
+    <title>AI Desk - Discover the Best AI Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy:       #0a0f1e;
+            --navy-mid:   #111827;
+            --navy-card:  #0d1526;
+            --cyan:       #00d4ff;
+            --cyan-dim:   #0099bb;
+            --violet:     #7c3aed;
+            --violet-dim: #5b21b6;
+            --white:      #ffffff;
+            --text-bright:#e2eaff;
+            --text-mid:   #94a3b8;
+            --text-dim:   #4b5e7a;
+            --glass-bg:   rgba(255,255,255,0.04);
+            --glass-border: rgba(0,212,255,0.15);
+            --shadow-cyan: rgba(0,212,255,0.18);
+            --shadow-violet: rgba(124,58,237,0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            min-height: 100vh;
+            color: var(--text-bright);
+            overflow-x: hidden;
+        }
+
+        /* ── ANIMATED BG GRID ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridDrift 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,58,237,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(0,212,255,0.12) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridDrift {
+            from { background-position: 0 0, 0 0; }
+            to   { background-position: 60px 60px, 60px 60px; }
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 30px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            text-align: center;
+            padding: 60px 20px 50px;
+            position: relative;
+        }
+
+        .header-eyebrow {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 6px;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            opacity: 0.8;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            line-height: 1;
+            /* 3D extrusion via stacked text-shadow */
+            text-shadow:
+                0 1px 0 #c8d8f0,
+                0 2px 0 #a0b8d8,
+                0 3px 0 #7898b8,
+                0 4px 0 #507898,
+                0 5px 0 #285878,
+                0 6px 0 #063858,
+                0 7px 6px rgba(0,0,0,0.5),
+                0 0 40px rgba(0,212,255,0.3);
+            margin-bottom: 16px;
+            display: inline-block;
+            transform: perspective(500px) rotateX(6deg);
+            transform-origin: bottom center;
+        }
+
+        .header-sub {
+            font-size: 1rem;
+            color: var(--text-mid);
+            letter-spacing: 2px;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        .header-line {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            margin: 24px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ── STATS ── */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            padding: 18px 32px;
+            border-radius: 16px;
+            text-align: center;
+            min-width: 130px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--violet), var(--cyan));
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px var(--shadow-cyan);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            color: var(--text-mid);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* ── FILTERS ── */
+        .filters {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filters::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            opacity: 0.85;
+        }
+
+        select, input {
+            padding: 11px 16px;
+            border: 1px solid rgba(0,212,255,0.25);
+            border-radius: 10px;
+            background: rgba(10,15,30,0.7);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            color: var(--text-bright);
+            min-width: 200px;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0,212,255,0.12), 0 0 20px rgba(0,212,255,0.08);
+            background: rgba(10,15,30,0.9);
+        }
+
+        select option {
+            background: var(--navy-mid);
+            color: var(--text-bright);
+        }
+
+        input::placeholder { color: var(--text-dim); }
+
+        .search-box { flex: 1; min-width: 280px; }
+
+        /* ── TOOLS GRID ── */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            perspective: 1200px;
+        }
+
+        /* ── TOOL CARD (3D tilt) ── */
+        .tool-card {
+            background: linear-gradient(145deg, rgba(13,21,38,0.95), rgba(10,15,30,0.98));
+            border: 1px solid rgba(0,212,255,0.12);
+            border-radius: 20px;
+            padding: 26px 28px;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease;
+            will-change: transform;
+        }
+
+        /* top shimmer line */
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+        }
+
+        /* inner glow layer */
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+                rgba(0,212,255,0.07) 0%, transparent 65%);
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .tool-card:hover {
+            border-color: rgba(0,212,255,0.35);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(0,212,255,0.1),
+                0 0 40px var(--shadow-cyan);
+        }
+
+        .tool-card:hover::before { opacity: 1; }
+        .tool-card:hover::after  { opacity: 1; }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+
+        .tool-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+
+        .tool-category {
+            background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(0,212,255,0.2));
+            border: 1px solid rgba(124,58,237,0.4);
+            color: var(--cyan);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tool-description {
+            color: var(--text-mid);
+            line-height: 1.7;
+            font-size: 0.88rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pricing-badge {
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 0.73rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .pricing-free {
+            background: rgba(0,255,140,0.1);
+            border: 1px solid rgba(0,255,140,0.3);
+            color: #00ff8c;
+        }
+
+        .pricing-paid {
+            background: rgba(255,80,80,0.1);
+            border: 1px solid rgba(255,80,80,0.3);
+            color: #ff5050;
+        }
+
+        .pricing-freemium {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.3);
+            color: var(--cyan);
+        }
+
+        .pricing-badge:not(.pricing-free):not(.pricing-paid):not(.pricing-freemium) {
+            background: rgba(124,58,237,0.1);
+            border: 1px solid rgba(124,58,237,0.3);
+            color: #a78bfa;
+        }
+
+        .tool-link {
+            background: linear-gradient(135deg, var(--violet), var(--cyan-dim));
+            color: var(--white);
+            padding: 9px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.8px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .tool-link span { position: relative; z-index: 1; }
+
+        .tool-link:hover::before { opacity: 1; }
+        .tool-link:hover {
+            box-shadow: 0 4px 20px var(--shadow-violet), 0 0 30px rgba(0,212,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ── NO RESULTS ── */
+        .no-results {
+            text-align: center;
+            color: var(--text-mid);
+            font-size: 1.1rem;
+            margin-top: 60px;
+            padding: 50px 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        .no-results h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* ── FOOTER ── */
+        .footer-credit {
+            text-align: center;
+            padding: 40px 0 24px;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-credit span { color: var(--cyan); }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: var(--violet-dim); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cyan-dim); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.4rem; letter-spacing: 2px; }
+            .filter-row { flex-direction: column; align-items: stretch; }
+            select, input { min-width: unset; width: 100%; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .stats { flex-direction: column; align-items: center; }
+            .filters { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div class="header-eyebrow">▸ Powered by Intelligence</div>
+            <h1>AI&nbsp;Desk</h1>
+            <p class="header-sub">Discover &amp; explore the best AI tools for every need</p>
+            <div class="header-line"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalTools">0</div>
+                <div class="stat-label">Total Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="freeTools">0</div>
+                <div class="stat-label">Free Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="categories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="categoryFilter">Category</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="pricingFilter">Pricing</label>
+                    <select id="pricingFilter">
+                        <option value="">All Pricing</option>
+                        <option value="free">Free</option>
+                        <option value="paid">Paid</option>
+                        <option value="freemium">Freemium</option>
+                    </select>
+                </div>
+                <div class="filter-group search-box">
+                    <label for="searchInput">Search Tools</label>
+                    <input type="text" id="searchInput" placeholder="Search by name, category or description...">
+                </div>
+            </div>
+        </div>
+
+        <div class="tools-grid" id="toolsGrid"></div>
+
+        <div class="no-results" id="noResults" style="display:none;">
+            <h3>⚡ No tools found</h3>
+            <p>Try adjusting your filters or search terms</p>
+        </div>
+
+        <div class="footer-credit">
+            Made by <span>Ranjith Dev M.</span> &nbsp;·&nbsp; Made for ALL 🤍
+        </div>
+
+    </div>
+
+    <script>
+        // ── PASTE YOUR TOOL DATA ARRAY HERE ──
+        const aiTools = [
+            // { name: "Tool Name", category: "Category", description: "Description.", pricing: "free|paid|freemium", url: "https://..." },
+        ];
+
+        // ── 3D CARD TILT ON MOUSE MOVE ──
+        function initTilt() {
+            document.addEventListener('mousemove', e => {
+                document.querySelectorAll('.tool-card').forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top  + rect.height / 2;
+                    const dx = (e.clientX - cx) / (rect.width  / 2);
+                    const dy = (e.clientY - cy) / (rect.height / 2);
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 2) {
+                        const rx =  dy * 8;
+                        const ry = -dx * 8;
+                        card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
+                        card.style.setProperty('--mx', `${(dx + 1) / 2 * 100}%`);
+                        card.style.setProperty('--my', `${(dy + 1) / 2 * 100}%`);
+                    } else {
+                        card.style.transform = '';
+                    }
+                });
+            });
+
+            document.addEventListener('mouseleave', () => {
+                document.querySelectorAll('.tool-card').forEach(c => c.style.transform = '');
+            });
+        }
+
+        // ── PRICING HELPERS ──
+        function getPricingClass(p) {
+            if (!p) return '';
+            const l = p.toLowerCase();
+            if (l === 'free')     return 'pricing-free';
+            if (l === 'paid')     return 'pricing-paid';
+            if (l === 'freemium') return 'pricing-freemium';
+            return '';
+        }
+
+        function getPricingLabel(p) {
+            if (!p) return '';
+            const l = p.toLowerCase();
+            if (l === 'free')     return 'Free';
+            if (l === 'paid')     return 'Paid';
+            if (l === 'freemium') return 'Freemium';
+            return p.charAt(0).toUpperCase() + p.slice(1);
+        }
+
+        // ── CORE LOGIC ──
+        let filteredTools = [...aiTools];
+
+        const categoryFilter = document.getElementById('categoryFilter');
+        const pricingFilter  = document.getElementById('pricingFilter');
+        const searchInput    = document.getElementById('searchInput');
+        const toolsGrid      = document.getElementById('toolsGrid');
+        const noResults      = document.getElementById('noResults');
+        const totalToolsEl   = document.getElementById('totalTools');
+        const freeToolsEl    = document.getElementById('freeTools');
+        const categoriesEl   = document.getElementById('categories');
+
+        function init() {
+            populateCategories();
+            updateStats();
+            renderTools();
+            setupEventListeners();
+            initTilt();
+        }
+
+        function populateCategories() {
+            const cats = [...new Set(aiTools.map(t => t.category))].sort();
+            cats.forEach(c => {
+                const o = document.createElement('option');
+                o.value = c; o.textContent = c;
+                categoryFilter.appendChild(o);
+            });
+        }
+
+        function updateStats() {
+            totalToolsEl.textContent = aiTools.length;
+            freeToolsEl.textContent  = aiTools.filter(t => t.pricing === 'free').length;
+            categoriesEl.textContent = new Set(aiTools.map(t => t.category)).size;
+        }
+
+        function renderTools() {
+            if (filteredTools.length === 0) {
+                toolsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            toolsGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+            toolsGrid.innerHTML = filteredTools.map(tool => `
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <h3 class="tool-name">${tool.name}</h3>
+                        <span class="tool-category">${tool.category}</span>
+                    </div>
+                    <p class="tool-description">${tool.description}</p>
+                    <div class="tool-footer">
+                        <span class="pricing-badge ${getPricingClass(tool.pricing)}">
+                            ${getPricingLabel(tool.pricing)}
+                        </span>
+                        <a href="${tool.url}" target="_blank" class="tool-link">
+                            <span>Visit Tool</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            initTilt();
+        }
+
+        function filterTools() {
+            const cat    = categoryFilter.value;
+            const price  = pricingFilter.value;
+            const search = searchInput.value.toLowerCase();
+            filteredTools = aiTools.filter(t =>
+                (!cat    || t.category === cat) &&
+                (!price  || t.pricing  === price) &&
+                (!search ||
+                    t.name.toLowerCase().includes(search) ||
+                    t.description.toLowerCase().includes(search) ||
+                    t.category.toLowerCase().includes(search))
+            );
+            renderTools();
+        }
+
+        function setupEventListeners() {
+            categoryFilter.addEventListener('change', filterTools);
+            pricingFilter.addEventListener('change',  filterTools);
+            searchInput.addEventListener('input',     filterTools);
+        }
+
+        init();
+    </script>
+</body>
+</html>
